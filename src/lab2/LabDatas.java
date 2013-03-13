@@ -56,7 +56,7 @@ public class LabDatas {
 	public static double absolutOfComparison(int value) {
 		double sinCos = Math.abs(Math.sin(value) / Math.cos(value));
 		double cosSin = Math.abs(Math.cos(value) / Math.sin(value));
-		return sinCos > cosSin ? sinCos : cosSin;
+		return Math.max(sinCos, cosSin);
 	}
 
 	/** 1.3. */
@@ -71,19 +71,20 @@ public class LabDatas {
 	}
 
 	/** 1.4. */
-	public static List<String> deleteElementsWithLengthByMod3(LinkedList<String> list) {
-		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).length() % 3 == 0)
-				list.remove(i);
+	public static List<String> deleteElementsWithLengthByMod3(List<String> list) {
+		Iterator<String> iteratorOfString = list.iterator();
+		while (iteratorOfString.hasNext()) {
+			if (iteratorOfString.next().length() % 3 == 0)
+				list.remove(list.indexOf(iteratorOfString));
 		}
 		return list;
 	}
 
 	/** 1.5. */
-	public static String drawStringWithoutStringsByMod3(LinkedList<String> list) {
+	public static String drawStringWithoutStringsByMod3(List<String> list) {
 		List<String> resultlisList = deleteElementsWithLengthByMod3(list);
-		if (resultlisList.size() == 0)
-			return null;
+		if (resultlisList.isEmpty())
+			return "";
 
 		StringBuilder stringbuilder = new StringBuilder();
 		for (Iterator<String> iterator = resultlisList.iterator(); iterator
@@ -95,22 +96,21 @@ public class LabDatas {
 	}
 
 	/** 1.6. */
-	public static ArrayList<Integer> convertToList(String[] mass) {
+	public static List<Integer> convertToList(String[] mass) {
 		if (mass.length == 0)
-			return null;
+			return Collections.emptyList();
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		for (String string : mass) {
-			list.add(Integer.parseInt(string));
+			list.add(Integer.valueOf(string));
 		}
 		return list;
 	}
 
 	/** 1.7. */
-	public static Integer[] convertToSortedArray(String[] mass) {
-		ArrayList<Integer> list = convertToList(mass);
+	public static int[] convertToSortedArray(String[] mass) {
+		List<Integer> list = convertToList(mass);
 		Collections.sort(list);
-		Integer[] array = new Integer[list.size()];
-		return list.toArray(array);
+		return toIntArray(list);
 	}
 
 	/** 1.8. */
@@ -151,6 +151,13 @@ public class LabDatas {
 				return true;
 		}
 		return false;
+	}
+
+	private static int[] toIntArray(List<Integer> list) {
+		int[] ret = new int[list.size()];
+		for (int i = 0; i < ret.length; i++)
+			ret[i] = list.get(i);
+		return ret;
 	}
 
 }

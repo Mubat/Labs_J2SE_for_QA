@@ -12,21 +12,14 @@ public class MathUtils {
 	 *            module Number
 	 * @return summery of value by massiv modulo modValue
 	 */
-	public static int summaryByMod(int[] mass, int modValue) {
-		if (mass.length == 0) {
-			System.err.println("Mass is empty");
-			System.exit(0);
-		}
+	public static int summaryByMod(int[] mass, int modValue) throws ArithmeticException {
 		if (modValue == 0) {
-			System.err.println("Mod number cann`t be zero.");
-			System.exit(0);
+			throw new ArithmeticException("Mod value cannot be 0.");
 		}
 		int summary = 0;
 		for (int i = 0; i < mass.length; i++) {
 			if (mass[i] % modValue == 0)
 				summary += mass[i];
-			else {
-			}
 		}
 		return summary;
 	}
@@ -40,7 +33,7 @@ public class MathUtils {
 	 *         0, "Negative" - ​​less than zero, and "Zero" - if 0.
 	 */
 	public static String comparePositive(int value) {
-		return value > 0 ? "Positiv" : value == 0 && value == -0 ? "Zero"
+		return value > 0 ? "Positiv" : value == 0 ? "Zero"
 				: "Negative";
 	}
 
@@ -58,7 +51,7 @@ public class MathUtils {
 		case -1:
 		case 0:
 		case 1:
-			return value > 0 ? "Positiv" : value == 0 ? "Zero" : "Negative";
+			return comparePositive(value);
 		}
 		return "Error";
 	}
@@ -90,12 +83,10 @@ public class MathUtils {
 	public static double scalarProduct(int[] mass1, int[] mass2)
 			throws ArithmeticException {
 		if (mass1.length != mass2.length)
-			throw new ArithmeticException("Arrays have the same length.");
+			throw new ArithmeticException("Arrays should have the same length.");
 		double result = 0;
 		int i = 0;
 		for (int element : mass1) {
-			if (mass1.length < i)
-				break;
 			result += element * mass2[i++];
 		}
 		return result;
@@ -118,10 +109,11 @@ public class MathUtils {
 		while (mass.length < i) {
 			if (mass[i] < 0)
 				negatives += mass[i];
-			else if (mass[i] > 0)
+			else 
 				positives += mass[i];
 			i++;
 		}
-		return positives / negatives;
+		
+		return (positives != 0 & negatives != 0) ? (positives / negatives) : 0;
 	}
 }
