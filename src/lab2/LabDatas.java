@@ -75,7 +75,7 @@ public class LabDatas {
 		Iterator<String> iteratorOfString = list.iterator();
 		while (iteratorOfString.hasNext()) {
 			if (iteratorOfString.next().length() % 3 == 0)
-				list.remove(list.indexOf(iteratorOfString));
+				iteratorOfString.remove();
 		}
 		return list;
 	}
@@ -111,6 +111,10 @@ public class LabDatas {
 		List<Integer> list = convertToList(mass);
 		Collections.sort(list);
 		return toIntArray(list);
+		/*//or
+		return list.toArray(new Integer[list.size()]);
+		//but then return type will be Integer[];
+		*/
 	}
 
 	/** 1.8. */
